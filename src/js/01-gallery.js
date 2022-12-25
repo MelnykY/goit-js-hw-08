@@ -2,25 +2,28 @@
 import { galleryItems } from './gallery-items';
 // Change code below this line
 
-console.log(galleryItems);
-import "simplelightbox/dist/simple-lightbox.min.css";
+//console.log(galleryItems);
+import SimpleLightbox from 'simplelightbox';
 
+const gallery = document.querySelector('.gallery');
 
-const gallery = document.querySelector(".gallery");
-const galleryEl = galleryItems
-  .map((item) => {
-    return `<div>
-    <a class="gallery__item" href="${item.original}">
-    <img class="gallery__image" src="${item.preview}" alt="${item.description}" />
-</a>
-    </div>`;
-  })
-  .join("");
-gallery.insertAdjacentHTML("beforeend", galleryEl);
+const imageEl = galleryItems
+  .map(
+    ({ preview, original, description }) => `
+<a class="gallery__item" href="${original}">
+  <img class="gallery__image" src="${preview}" alt="${description}" />
+</a>`
+  )
+  .join('');
 
-var lightbox = new SimpleLightbox(".gallery a", {
-  captionsData: "alt",
-  captionDelay: 250,
+gallery.insertAdjacentHTML('beforeend', imageEl);
+gallery.addEventListener('click', onImageClick);
+
+function onImageClick(event) {
+  event.preventDefault();
+}
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: `alt`,
+  captionDelay: `250`,
 });
-
-console.log(galleryItems);
